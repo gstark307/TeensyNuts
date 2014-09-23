@@ -5,10 +5,10 @@
 #include <sqstdio.h>
 #include "sqstdstream.h"
 
+SQInteger file_read(SQUserPointer file,SQUserPointer buf,SQInteger size);
+
 #define SQSTD_FILE_TYPE_TAG (SQSTD_STREAM_TYPE_TAG | 0x00000001)
 //basic API
-
-
 SQFILE sqstd_fopen(const SQChar *filename ,const SQChar *mode)
 {
 #ifndef SQUNICODE
@@ -278,12 +278,6 @@ static SQInteger _io_file_lexfeed_UCS2_BE(SQUserPointer file)
 	return 0;
 }
 
-SQInteger file_read(SQUserPointer file,SQUserPointer buf,SQInteger size)
-{
-	SQInteger ret;
-	if( ( ret = sqstd_fread(buf,1,size,(SQFILE)file ))!=0 )return ret;
-	return -1;
-}
 
 SQInteger file_write(SQUserPointer file,SQUserPointer p,SQInteger size)
 {

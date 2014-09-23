@@ -28,7 +28,7 @@ COMPILERPATH = $(TEENSYPATH)/hardware/tools/arm-none-eabi/bin
 # Settings below this point usually do not need to be edited
 #************************************************************************
 
-INCLUDEPATHS = -I./core -I./Squirrel/include -I./SdFat
+INCLUDEPATHS = -I./core -I./Squirrel/include -I./SdFat -I./sqstdlib
 # CPPFLAGS = compiler options for C and C++
 CPPFLAGS = $(INCLUDEPATHS) -Wall -g -Os -mcpu=cortex-m4 -mthumb -nostdlib -MMD $(OPTIONS) -I.
 
@@ -56,7 +56,7 @@ SIZE = $(abspath $(COMPILERPATH))/arm-none-eabi-size
 TEENSYCORE_C_FILES := $(wildcard core/*.c) 
 TEENSYCORE_CPP_FILES := $(wildcard core/*.cpp)
 SDFAT_FILES := $(wildcard SdFat/*.cpp)
-SQUIRREL_FILES := $(wildcard Squirrel/*.cpp) $(wildcard Squirrel/sqstdlib/*.cpp)
+SQUIRREL_FILES := $(wildcard Squirrel/*.cpp) $(wildcard sqstdlib/*.cpp)
 SDFAT_FILES := $(wildcard SdFat/*.cpp)
 SQ_ARD_FILES := $(wildcard sq_ard/*.cpp)
 C_FILES := $(wildcard *.c)

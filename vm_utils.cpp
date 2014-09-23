@@ -25,6 +25,10 @@ extern "C" {
     int _kill(int pid, int sig) {
         return(-1);
     }
+
+	int open(const char *name, int flags, int mode){
+        return -1;
+    }
 }
 
 

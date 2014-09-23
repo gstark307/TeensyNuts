@@ -1,2 +1,2 @@
-Squirrel/sqstdlib/sqstdmath.o: Squirrel/sqstdlib/sqstdmath.cpp \
- Squirrel/include/squirrel.h Squirrel/include/sqstdmath.h
+sqstdlib/sqstdmath.o: sqstdlib/sqstdmath.cpp Squirrel/include/squirrel.h \
+ sqstdlib/sqstdmath.h

@@ -20,6 +20,7 @@
 
 
 #include <squirrel.h>
+#include <sqstdio.h>
 
 
 SQInteger register_global_func(HSQUIRRELVM v,SQFUNCTION f,const char *fname);

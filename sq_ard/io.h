@@ -24,6 +24,9 @@
 void io_init(HSQUIRRELVM v);
 SQInteger io_pinmode(HSQUIRRELVM v);
 SQInteger io_digitalwrite(HSQUIRRELVM v);
+SQInteger io_digitalread(HSQUIRRELVM v);
+SQInteger io_analogwrite(HSQUIRRELVM v);
+SQInteger io_analogread(HSQUIRRELVM v);
 
 #endif
 
