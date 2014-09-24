@@ -20,10 +20,14 @@
 
 
 #include <squirrel.h>
-#include <sqstdio.h>
 
 
 SQInteger register_global_func(HSQUIRRELVM v,SQFUNCTION f,const char *fname);
+SQInteger file_read(SQUserPointer file,SQUserPointer buf,SQInteger size);
+
+void util_init(HSQUIRRELVM v);
+SQInteger util_use(HSQUIRRELVM v);
+
 
 
 #endif

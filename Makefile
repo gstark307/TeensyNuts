@@ -93,6 +93,7 @@ monitor:
 
 clean:
 	find ./ -type f -name "*.o" -delete
+	find ./ -type f -name "*.d" -delete
 	rm -f *.o *.d $(TARGET).elf $(TARGET).hex
 
 

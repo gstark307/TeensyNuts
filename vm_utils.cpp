@@ -15,6 +15,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include <SdFat.h>
 #include "vm_utils.h"
 
 extern "C" {
@@ -25,13 +26,7 @@ extern "C" {
     int _kill(int pid, int sig) {
         return(-1);
     }
-
-	int open(const char *name, int flags, int mode){
-        return -1;
-    }
 }
-
-
 
 
 SQInteger register_global_func(HSQUIRRELVM v,SQFUNCTION f,const char *fname)
@@ -41,6 +36,51 @@ SQInteger register_global_func(HSQUIRRELVM v,SQFUNCTION f,const char *fname)
     sq_newclosure(v,f,0); //create a new function
     sq_newslot(v,-3,SQFalse); 
     sq_pop(v,1); //pops the root table    
+}
+
+SQInteger file_read(SQUserPointer file,SQUserPointer buf,SQInteger size)
+{
+    ifstream* pfile = (ifstream*)file;
+    SQInteger ret;
+    ret = pfile->read(buf, size);
+    if(ret != 0)
+        return ret;
+    return -1;
+}
+
+void util_init(HSQUIRRELVM v)
+{
+	register_global_func(v, util_use, "use");
+}
+
+SQInteger util_use(HSQUIRRELVM v)
+{
+	SQInteger nargs = sq_gettop(v); //number of arguments
+	if(nargs >= 2)
+	{
+		if(sq_gettype(v, 2) != OT_STRING)
+		{
+			sq_throwerror(v, "bad parameter");
+			return 0;
+		}
+
+		const SQChar* libname;
+		sq_getstring(v, 2, &libname);
+		
+		ifstream file(libname);
+		if (!file.is_open())
+		{
+			sq_throwerror(v, "couldn't open file");
+			return 0;
+		}
+
+		if(!SQ_SUCCEEDED(sq_readclosure(v,file_read,&file)))
+		{
+			sq_throwerror(v, "error using file");
+		}
+		file.close();
+	}
+	return 0;
 }
 
 

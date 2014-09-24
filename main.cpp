@@ -52,25 +52,17 @@ void errorfunc(HSQUIRRELVM v,const SQChar *s,...)
 	Serial.print(buf);
 }
 
-SQInteger file_read(SQUserPointer file,SQUserPointer buf,SQInteger size)
-{
-    ifstream* pfile = (ifstream*)file;
-    SQInteger ret;
-    ret = pfile->read(buf, size);
-    if(ret != 0)
-        return ret;
-    return -1;
-}
-
 
 int main()
 {
+	delay(5000);
     Serial.begin(115200);
 
     SQInteger retval=0;
     HSQUIRRELVM v;
-    v = sq_open(2048);
+    v = sq_open(1024);
 
+	util_init(v);
 	time_init(v);
 	io_init(v);
 
@@ -95,10 +87,13 @@ int main()
             delay(1000);
         }
     }
+	file.close();
 
     sq_setprintfunc(v, printfunc,errorfunc); //sets the print function
 
     sq_pushroottable(v); //push the root table(were the globals of the script will be stored)
+
+	Serial.print("begining");
     while(1)
     {
         sq_call(v,1,SQTrue,SQTrue);
