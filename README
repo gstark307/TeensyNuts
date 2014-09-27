@@ -1,0 +1,5 @@
+ArduNuts is a project to get the Squirrel programming language working on a Teensy 3.1. 
+
+The Squirrel language is fantastic. It has a C++ feel to it, but it's got some really nice features built in such as memory management and cooperative threading. Squirrel scripts can be compiled on a computer and transferred to an SD card. The Teensy can load and run the script from the card. The code on the Teensy exists only to interpret the Squirrel bytecode. 
+
+The aim of the project is to get the Arduino core library as well as several popular libraries ported to the Squirrel programming language. Some parts will have to built into the VM, others could be written in Squirrel. 

@@ -16,8 +16,13 @@
 */
 
 #include <Arduino.h>
+#include "squirrel.h"
+#include "sqstdblob.h"
+#include "sqstdmath.h"
+#include "sqstdstring.h"
 #include "sq_ard/time.h"
 #include "sq_ard/io.h"
+#include "sq_ard/serial.h"
 #include "main.h"
 #include "vm_utils.h"
 
@@ -55,16 +60,20 @@ void errorfunc(HSQUIRRELVM v,const SQChar *s,...)
 
 int main()
 {
-	delay(5000);
     Serial.begin(115200);
 
     SQInteger retval=0;
     HSQUIRRELVM v;
     v = sq_open(1024);
 
+	sqstd_register_bloblib(v);
+	sqstd_register_mathlib(v);
+	sqstd_register_stringlib(v);
+
 	util_init(v);
 	time_init(v);
 	io_init(v);
+	serial_init(v);
 
     while(!sd.begin(chipSelect, SPI_HALF_SPEED))
     {
@@ -75,7 +84,7 @@ int main()
         delay(300);
     }
 
-    ifstream file("SCRIPT");
+    ifstream file("main");
 
     if (!file.is_open()) sd.errorHalt("open failed");
 

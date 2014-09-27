@@ -78,6 +78,9 @@ SQInteger util_use(HSQUIRRELVM v)
 		{
 			sq_throwerror(v, "error using file");
 		}
+
+		sq_pushroottable(v); //push the root table(were the globals of the script will be stored)
+        sq_call(v,1,SQTrue,SQTrue);
 		file.close();
 	}
 	return 0;

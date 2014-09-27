@@ -25,6 +25,30 @@ void io_init(HSQUIRRELVM v)
 	register_global_func(v, io_digitalread, "digitalRead");
 	register_global_func(v, io_analogwrite, "analogWrite");
 	register_global_func(v, io_analogread, "analogRead");
+
+	sq_pushconsttable(v) ;
+
+	sq_pushstring(v,"HIGH",-1);
+	sq_pushinteger(v, HIGH);
+	sq_rawset(v,-3);
+
+	sq_pushstring(v,"LOW",-1);
+	sq_pushinteger(v, LOW);
+	sq_rawset(v,-3);
+
+	sq_pushstring(v,"INPUT",-1);
+	sq_pushinteger(v, INPUT);
+	sq_rawset(v,-3);
+
+	sq_pushstring(v,"OUTPUT",-1);
+	sq_pushinteger(v, OUTPUT);
+	sq_rawset(v,-3);
+
+	sq_pushstring(v,"INPUT_PULLUP",-1);
+	sq_pushinteger(v, INPUT_PULLUP);
+	sq_rawset(v,-3);
+
+	sq_poptop(v);
 }
 
 SQInteger io_pinmode(HSQUIRRELVM v)
@@ -42,26 +66,7 @@ SQInteger io_pinmode(HSQUIRRELVM v)
 		sq_getinteger(v, 2, &pin);
 		sq_getinteger(v, 3, &pm);
 
-		switch(pm)
-		{
-			case 0:
-			{
-				pinMode(pin, INPUT);	
-			}
-			break;
-			case 1:
-			{
-				pinMode(pin, OUTPUT);
-			}
-			break;
-			case 2:
-			{
-				pinMode(pin, INPUT_PULLUP);
-			}
-			break;
-			default:
-				sq_throwerror(v, "bad parameter");
-		}
+		pinMode(pin, pm);
 	}
 	return 0;
 }
